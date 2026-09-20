@@ -99,3 +99,6 @@ __pycache__/
 
 # ----- Duplicate PDF pattern -----
 # (originals kept, _1 duplicates purged manually)
+
+# ----- Local Archive (not tracked) -----
+_archive/
