@@ -1,0 +1,52 @@
+REM Usage: Rename this file to createMIGRFile.bat and run it in
+REM the directory where the downloaded files are located after
+REM unpacking the ZIP. A new file named cadenas.migr will be created
+REM which can be read by the AutoCad Electrical Migration Utility
+REM and will allow you to import all downloaded files by one click.
+echo off
+echo ^<?xml version="1.0"?^>> cadenas.migr
+echo ^<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"^>>> cadenas.migr
+echo   ^<Version name="&lt;Custom&gt;" selected="true"^>>> cadenas.migr
+echo     ^<Entries name="IDS_CATALOG_LOOKUP" selected="true" copyType="DBCopy"^>>> cadenas.migr
+echo       ^<Entry name="IDS_CATALOG_LOOKUP" selected="true" processType="DefaultCatalogDBProcess" defineInWdEnv="true" extSupported="mdb" backup="true" firstFound="false" recursive="false"^>>> cadenas.migr
+echo         ^<File overwrite="true" copyMergeOption="IDS_OPTION_MERGE" otherOptions="" createDestFolder="false" customizedPath="false"^>>> cadenas.migr
+echo           ^<Source^>>> cadenas.migr
+echo             ^<Path^>%~dp0^</Path^>>> cadenas.migr
+echo             ^<Filename^>MSMF092L1A1.MDB^</Filename^>>> cadenas.migr
+echo           ^</Source^>>> cadenas.migr
+echo           ^<Destination^>>> cadenas.migr
+echo             ^<Path^>%%wd_dir%%\%%WD_LANG%%\catalogs\^</Path^>>> cadenas.migr
+echo             ^<Filename^>default_cat.mdb^</Filename^>>> cadenas.migr
+echo           ^</Destination^>>> cadenas.migr
+echo         ^</File^>>> cadenas.migr
+echo       ^</Entry^>>> cadenas.migr
+echo     ^</Entries^>>> cadenas.migr
+echo     ^<Entries name="IDS_CONTENT" selected="true" copyType="FileMerge"^>>> cadenas.migr
+echo       ^<Entry name="IDS_FOOTPRINT_LOOKUP" selected="true" processType="FootprintLookupDBProcess" defineInWdEnv="true" extSupported="mdb" backup="true" firstFound="false" recursive="false"^>>> cadenas.migr
+echo         ^<File overwrite="true" copyMergeOption="IDS_OPTION_MERGE" createDestFolder="false" customizedPath="false"^>>> cadenas.migr
+echo           ^<Source^>>> cadenas.migr
+echo             ^<Path^>%~dp0^</Path^>>> cadenas.migr
+echo             ^<Filename^>MSMF092L1A1_footprint_lookup.mdb^</Filename^>>> cadenas.migr
+echo           ^</Source^>>> cadenas.migr
+echo           ^<Destination^>>> cadenas.migr
+echo             ^<Path^>%%wd_dir%%\%%WD_LANG%%\catalogs\^</Path^>>> cadenas.migr
+echo             ^<Filename^>footprint_lookup.mdb^</Filename^>>> cadenas.migr
+echo           ^</Destination^>>> cadenas.migr
+echo         ^</File^>>> cadenas.migr
+echo       ^</Entry^>>> cadenas.migr
+echo     ^</Entries^>>> cadenas.migr
+echo     ^<Entries name="IDS_FOOTPRINTS" selected="true" copyType="FileCopy"^>>> cadenas.migr
+echo       ^<Entry name="IDS_FOOTPRINTS" selected="true" processType="FileProcess" defineInWdEnv="false" extSupported="dwg" backup="false" firstFound="false" recursive="true"^>>> cadenas.migr
+echo         ^<File overwrite="true" copyMergeOption="IDS_OPTION_COPY" createDestFolder="false" customizedPath="false"^>>> cadenas.migr
+echo           ^<Source^>>> cadenas.migr
+echo             ^<Path^>%~dp0SymbolInch\^</Path^>>> cadenas.migr
+echo             ^<Filename^>*.dwg^</Filename^>>> cadenas.migr
+echo           ^</Source^>>> cadenas.migr
+echo           ^<Destination^>>> cadenas.migr
+echo             ^<Path^>%%SL_DIR%%^</Path^>>> cadenas.migr
+echo           ^</Destination^>>> cadenas.migr
+echo         ^</File^>>> cadenas.migr
+echo       ^</Entry^>>> cadenas.migr
+echo     ^</Entries^>>> cadenas.migr
+echo   ^</Version^>>> cadenas.migr
+echo ^</Settings^>>> cadenas.migr

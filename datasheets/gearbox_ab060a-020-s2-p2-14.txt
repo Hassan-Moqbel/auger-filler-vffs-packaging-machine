@@ -1,0 +1,10 @@
+﻿"Symbol";"Value";"Unit";
+"TraceParts.PartNumber";"33-24082020-079384";"";
+"REFERENCE";"AB060A-020-S2-P2";"";
+"TraceParts.PartTitle";"AB series";"";
+"TraceParts.InstanceId";"33-24082020-079384EEOGMEHNSKVF1W1UBGFLU5V7D";"";
+"SUPPLIER";"APEX DYNAMICS, INC.";"";
+"DESIGN";"AB Series - High Precision Planetary Gearbox AB060A-020-S2-P2";"";
+"TRACEPARTS";"TRACEPARTS";"";
+"TraceParts.PartLanguage";"en";"";
+"TraceParts.PartVersion";"1.1.2";"";

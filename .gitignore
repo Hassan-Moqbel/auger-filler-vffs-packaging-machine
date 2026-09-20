@@ -1,0 +1,101 @@
+# ============================================================
+# VFFS Packaging Machine — Production .gitignore
+# Mechatronics: SolidWorks + ANSYS + Embedded Firmware
+# ============================================================
+
+# ----- SolidWorks Lock & Backup Files -----
+~$*.SLDPRT
+~$*.SLDASM
+~$*.SLDDRW
+*.sldprt.bak
+*.sldasm.bak
+*.slddrw.bak
+*.tmp
+*.swp
+swxauth
+*.~lock.*
+
+# ----- SolidWorks Simulation Solver Results (Regenerable) -----
+*.CWR
+*.cwr
+
+# ----- ANSYS Heavy Solver Binaries & Cache -----
+*.rst
+*.rth
+*.rmg
+*.esav
+*.full
+*.emat
+*.mntr
+*.ldhi
+*.err
+*.lock
+*.db
+*.dsdb
+*.agdb
+*.mechdb
+*.cdb
+*.dat
+*.stat
+*.out
+*.BCS
+*.xml.bak
+*_files/dp0/
+*_files/user_files/
+*_files/SYS*/
+solve.out
+
+# ----- ANSYS Preserve These -----
+# .wbpj files (project structure) — NOT ignored
+# Exported PNG/JPG stress plots — NOT ignored
+
+# ----- Pirated / Prohibited Software -----
+*Getintopc*
+*getintopc*
+*_Professional_*setup*
+*_Professional_*.rar
+
+# ----- Large Binary Archives (already extracted) -----
+*.rar
+*.7z
+
+# ----- 3D Render Environment Files (regenerable) -----
+*.hdr
+*.p2s
+*.p2m
+
+# ----- OS & Editor Junk -----
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+
+# ----- Python Bytecode -----
+__pycache__/
+*.pyc
+*.pyo
+
+# ----- IDE & Editor -----
+.vscode/
+.idea/
+*.suo
+*.user
+
+# ----- Large Video Files (keep only MP4, block AVI) -----
+*.avi
+*.wmv
+*.mov
+
+# ----- Executables & Installers -----
+*.exe
+*.msi
+
+# ----- ANSYS Massive Solver Databases -----
+*.mechdb
+*.rst
+*.full
+*.esav
+
+# ----- Duplicate PDF pattern -----
+# (originals kept, _1 duplicates purged manually)

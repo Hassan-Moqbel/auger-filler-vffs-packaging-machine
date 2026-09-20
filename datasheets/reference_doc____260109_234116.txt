@@ -1,0 +1,33 @@
+الحساسات ومحولاتها (modules): 
+
+حساس Thermocouple Type K + MAX6675 module (or MAX31855). لقياس حرارة سخانات التلحيم وفكوك اللحام. 
+
+حساس capacitive continuous level sensor 
+(with Logic level converter or with shunt resistor) لقياس مستوى المسحوق في الهوبر 
+
+حساس لقياس ضغط الهواء المستخدم للمكابس 0-8 bar. 
+(with Logic level converter or with shunt resistor)
+
+حساس ضوئي لتحسس وجود الفيلم (الكيس) photoelectric sensor + optocoupler. 
+
+ حساس Registration/Eye Mark Sensor طراز KS-C2 (NPN) (مثل KS-C2W) لتحسس النقطة السوداء على الكيس لضبط أبعاده وتحديد مكان القص والتلحيم عليه.
+
+ حساس إغلاق فكّي اللحام Jaws-closed limit switch. 
+
+حساس loadcell(SC134) وزن  + HX711 module. 
+Or(TAL220-PC10)
+
+العوازل والمحولات: 
+
+8-channel logic level converter 
+(TXS0108E /أو 74HCT125) 
+لربط إشارات الستيب موتور (Pulse/Dir) من 3.3V إلى 5V.
+
+4-Channel Optocoupler Relay Module (5V/3.3V trigger) لتشغيل صمامات الهواء ومحرك الشفرات لمنع التجسر داخل الهوبر، ولتوفير عزل كهربائي بين حساسات (مثل photoelectric 24V) ودوائر الـESP32، مما يحمي المتحكم من الجهد العالي أو التشويش. 
+
+AC SSR 40A 3-32V DC control 220VAC load,(SO843970). يسمح لـ ESP32 (3.3V إشارة) بالتحكم في 220VAC السخانات بالكفاءة العالية والعزل الكامل بين التحكم والحمل
+
+Power Suplly, MeanWell LRS-350-24 (24V, 
+14.6A).
+ 
+ 24V to 5V DC-DC Converter Module لتغذية الـESP32 ودوائر الاستشعار بـ جهد ثابت ومستقر.

@@ -1,0 +1,91 @@
+# encoding: utf-8
+# 2023 R1
+SetScriptVersion(Version="23.1.153")
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system1 = template1.CreateSystem()
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/user1/Desktop/VFFS/Auger.SLDPRT")
+modelComponent1 = system1.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+favorites1 = EngData.LoadFavoriteItems()
+library1 = EngData.OpenLibrary(
+    Name="General Materials",
+    Source="General_Materials.xml")
+engineeringData1 = system1.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.ImportMaterial(
+    Name="Stainless Steel",
+    Source="General_Materials.xml")
+matlProp1 = matl1.GetProperty(Name="Density")
+matlProp1.SetData(
+    Variables=["Density"],
+    Values=[["8000 [kg m^-3]"]])
+matlProp2 = matl1.GetProperty(Name="Elasticity")
+matlProp2.SetQualifier(
+    Qualifier="Derive from",
+    Value="Shear Modulus and Young's Modulus")
+matlProp2.SetVariableProperty(
+    VariableName="Shear Modulus",
+    Property="Unit",
+    Value="GPa")
+matlProp2.SetData(
+    Variables=["Shear Modulus"],
+    Values=[["73.6641221374046 [GPa]"]])
+matlProp2.SetData(
+    Variables=["Shear Modulus"],
+    Values=[["75 [GPa]"]])
+matlProp2.SetQualifier(
+    Qualifier="Derive from",
+    Value="Shear Modulus and Poisson's Ratio")
+matlProp2.SetData(
+    Variables=["Poisson's Ratio"],
+    Values=[["0.29"]])
+matlProp3 = matl1.GetProperty(Name="Tensile Yield Strength")
+matlProp3.SetVariableProperty(
+    VariableName="Tensile Yield Strength",
+    Property="Unit",
+    Value="MPa")
+matlProp3.SetData(
+    Variables=["Tensile Yield Strength"],
+    Values=[["207 [MPa]"]])
+matlProp4 = matl1.GetProperty(Name="Compressive Yield Strength")
+matlProp4.SetVariableProperty(
+    VariableName="Compressive Yield Strength",
+    Property="Unit",
+    Value="MPa")
+matlProp4.SetData(
+    Variables=["Compressive Yield Strength"],
+    Values=[["207 [MPa]"]])
+matlProp3.SetData(
+    Variables=["Tensile Yield Strength"],
+    Values=[["206.8 [MPa]"]])
+matlProp5 = matl1.GetProperty(Name="Tensile Ultimate Strength")
+matlProp5.SetVariableProperty(
+    VariableName="Tensile Ultimate Strength",
+    Property="Unit",
+    Value="MPa")
+matlProp5.SetData(
+    Variables=["Tensile Ultimate Strength"],
+    Values=[["586 [MPa]"]])
+matlProp5.SetData(
+    Variables=["Tensile Ultimate Strength"],
+    Values=[["517 [MPa]"]])
+geometryComponent1 = system1.GetComponent(Name="Geometry")
+geometryComponent1.Update(AllDependencies=True)
+engineeringDataComponent1 = system1.GetComponent(Name="Engineering Data")
+engineeringDataComponent1.Update(AllDependencies=True)
+geometryComponent1.Update(AllDependencies=True)
+modelComponent1.Refresh()
+model1.Edit()
+Extensions.AddToDefaultExtensions(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Extensions.LoadExtension(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Extensions.RemoveFromDefaultExtensions(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Extensions.UnloadExtension(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Extensions.AddToDefaultExtensions(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Extensions.LoadExtension(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Extensions.RemoveFromDefaultExtensions(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Extensions.UnloadExtension(Id="34911704-9f36-4f61-aede-93815a50e15e")
+Save(Overwrite=True)
