@@ -95,25 +95,36 @@ flowchart TD
 ## Intermittent VFFS Machine Cycle — State Machine
 
 ```mermaid
-stateDiagram-v2
-    [*] --> IDLE : Power On and Heaters at Setpoint
+flowchart TD
+    START(["System Power-On & Initialization"]) --> IDLE(["IDLE: Temperature Setpoint Reached"])
 
-    IDLE --> FILM_ADVANCE : HMI Start Command Issued
-    FILM_ADVANCE --> VERTICAL_SEAL : Film Web Pulled to Target Bag Length
+    IDLE -->|"HMI Start Trigger"| FILM_ADV["FILM ADVANCE: Pull Web to Bag Length"]
+    FILM_ADV -->|"Web Sensed & Tensioned"| V_SEAL["VERTICAL SEAL: Longitudinal Back-Seal Engaged"]
 
-    VERTICAL_SEAL --> AUGER_DOSING : Longitudinal Back-Seal Bar Engaged
-    AUGER_DOSING --> DWELL_SETTLE : 4.5 Servo Revolutions Complete
+    V_SEAL -->|"Tube Locked"| DOSING["AUGER DOSING: 4.5 Servo Revolutions Active"]
+    DOSING -->|"Servo Position Complete"| DWELL["DWELL & SETTLE: Powder Settles in Tube"]
 
-    DWELL_SETTLE --> HORIZONTAL_SEAL : Powder Column Settled in Bag
-    HORIZONTAL_SEAL --> CUT_DISCHARGE : Thermal Dwell Timer Expired
+    DWELL -->|"Dwell Timer Expired"| H_SEAL["HORIZONTAL SEAL: Cross-Seal Pneumatic Clamp"]
+    H_SEAL -->|"Thermal Seal Timer Expired"| CUT["CUT & DISCHARGE: Pneumatic Knife Actuation"]
 
-    CUT_DISCHARGE --> FILM_ADVANCE : Knife Actuated and Bag Released
+    CUT -->|"Bag Released to Chute"| CYCLE_CHECK{"Continuous Run?"}
+    CYCLE_CHECK -->|"Yes / Automatic Mode"| FILM_ADV
+    CYCLE_CHECK -->|"Stop Command"| IDLE
 
-    FILM_ADVANCE --> E_STOP : Safety Guard Door Opened
-    AUGER_DOSING --> E_STOP : Servo Fault or Overcurrent
-    HORIZONTAL_SEAL --> E_STOP : Jaw Thermocouple Fault
-    E_STOP --> IDLE : E-Stop Reset and Safety Circuit Restored
+    FILM_ADV -.->|"Safety Guard Interruption"| ESTOP(["E-STOP: Fail-Safe Zero-Energy State"])
+    DOSING -.->|"Servo Torque Overload"| ESTOP
+    H_SEAL -.->|"Jaw Thermal Runaway"| ESTOP
+    ESTOP ==>|"Manual Reset & Acknowledge"| IDLE
+
+    classDef stateNode fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef stopNode fill:#7f1d1d,stroke:#ef4444,stroke-width:2px,color:#fee2e2;
+    classDef decision fill:#0f172a,stroke:#fbbf24,stroke-width:2px,color:#fef08a;
+
+    class START,IDLE,FILM_ADV,V_SEAL,DOSING,DWELL,H_SEAL,CUT stateNode;
+    class ESTOP stopNode;
+    class CYCLE_CHECK decision;
 ```
+
 
 ---
 
