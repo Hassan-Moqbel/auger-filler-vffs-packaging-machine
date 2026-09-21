@@ -11,7 +11,7 @@
 A fully integrated, publication-grade mechatronic design of an industrial Vertical Form Fill Seal (VFFS) packaging machine with a precision servo-driven auger dosing unit. This capstone engineering project encompasses complete 3D SolidWorks parametric modeling of the entire machine, rigorous ANSYS Workbench finite element structural validation across three progressive load cases, analytical volumetric and torque calculations verified against empirical calibration data, and embedded ESP32 motion control firmware — delivering a production-ready system engineered to package $500\text{ g}$ doses of granular NaCl powder at $15\text{ bags/min}$ with sub-percent gravimetric accuracy through $4.5$ precision servo-metered auger revolutions.
 
 <p align="center">
-  <img src="docs/images/cad_renders/vffs_master_cad_overview.png" alt="VFFS Packaging Machine — Complete SolidWorks Assembly" width="750"/>
+  <img src="docs/images/cad_renders/vffs_master_cad_overview.jpg" alt="VFFS Auger Filler CAD Master Assembly Overview" width="750"/>
   <br/>
   <em>Fig. 1 — Complete VFFS Machine Assembly: Conical Hopper, Servo-Driven Auger Dosing Head, Film Forming Shoulder, and Pneumatic Cross-Seal Jaws.</em>
 </p>
