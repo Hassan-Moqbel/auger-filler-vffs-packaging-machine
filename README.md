@@ -59,35 +59,35 @@ This VFFS machine architecture strictly adheres to international food packaging 
 
 ```mermaid
 flowchart TD
-    subgraph ServoDrive["Precision AC Servo Drive Train"]
-        SERVO["Panasonic MSMF042L1U1<br/>400W AC Servo, MINAS A6<br/>1.27 Nm @ 3000 RPM"]
-        GEARBOX["Apex AB060A-020<br/>1:20 Planetary Reducer<br/>Efficiency > 95%"]
-        COUPLING["Flange Coupling<br/>80 mm OD, 4x M8 Bolts<br/>Cross-Pin Torque Transfer"]
-        SERVO -->|"3000 RPM / 1.27 Nm"| GEARBOX
-        GEARBOX -->|"150 RPM / 24.13 Nm"| COUPLING
+    subgraph DriveTrain[Precision Servo Drive Train]
+        SERVO[Panasonic MSMF042L1U1 400W AC Servo Motor]
+        GEARBOX[Apex AB060A-020 1:20 Planetary Reducer]
+        COUPLING[Rigid Flange Coupling with Cross-Pin]
+        SERVO -->|3000 RPM / 1.27 Nm Rated| GEARBOX
+        GEARBOX -->|150 RPM / 24.13 Nm Output| COUPLING
     end
 
-    subgraph AugerHead["Auger Dosing Head Assembly"]
-        HOPPER["Conical Hopper<br/>20 kg Capacity, SS316L<br/>Counter-Rotating Agitator"]
-        AUGER["Precision Auger Screw<br/>D=60mm, p=60mm, 4 Turns<br/>SS316L, Ra < 1.6 um"]
-        PLATE["Rotary Metering Plate<br/>Counter-Rotating<br/>SS316L"]
+    subgraph DosingHead[Auger Dosing Head Assembly]
+        HOPPER[Conical Hopper 20kg with Anti-Bridge Agitator]
+        AUGER[Precision Helical Auger D=60mm p=60mm SS316L]
+        PLATE[Counter-Rotating Rotary Metering Plate]
         COUPLING --> AUGER
-        HOPPER -->|"Gravity + Agitator Feed"| AUGER
-        AUGER -->|"Volumetric Displacement"| PLATE
+        HOPPER -->|Gravity and Agitator Feed| AUGER
+        AUGER -->|Volumetric Displacement| PLATE
     end
 
-    subgraph FilmSystem["Film Forming & Sealing Line"]
-        UNWIND["Film Reel Unwinder<br/>Dancer Roller Tension Control"]
-        FORMER["Forming Shoulder Collar<br/>Flat-to-Tube Geometry<br/>BOPP Film Wrap"]
-        VSEAL["Vertical Back-Seal Bar<br/>Continuous Longitudinal Heat Seal"]
-        HSEAL["Horizontal Cross-Seal Jaws<br/>Pneumatic Clamp + Flying Knife<br/>Thermal Dwell Control"]
+    subgraph FilmForming[Film Forming and Sealing Subsystem]
+        UNWIND[Film Reel Unwinder with Dancer Tensioner]
+        FORMER[Forming Shoulder Collar and Tube]
+        VSEAL[Vertical Longitudinal Back-Seal Bar]
+        HSEAL[Horizontal Pneumatic Cross-Seal Jaws]
         UNWIND --> FORMER
         FORMER --> VSEAL
         VSEAL --> HSEAL
     end
 
-    PLATE -->|"Metered 500g Powder Dose"| FORMER
-    HSEAL -->|"Sealed and Cut Bag"| DISCHARGE["Bag Discharge Chute"]
+    PLATE -->|Metered Powder Dose 500g| FORMER
+    HSEAL -->|Hermetically Sealed Bag| DISCHARGE[Discharge Chute]
 ```
 
 ---
@@ -96,33 +96,26 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    START(["System Power-On & Initialization"]) --> IDLE(["IDLE: Temperature Setpoint Reached"])
+    START([System Power-On and Initialization]) --> IDLE([IDLE: Temperature Setpoints Reached])
 
-    IDLE -->|"HMI Start Trigger"| FILM_ADV["FILM ADVANCE: Pull Web to Bag Length"]
-    FILM_ADV -->|"Web Sensed & Tensioned"| V_SEAL["VERTICAL SEAL: Longitudinal Back-Seal Engaged"]
+    IDLE -->|HMI Start Trigger| FILM_ADV[FILM ADVANCE: Pull Web to Target Bag Length]
+    FILM_ADV -->|Web Position Sensed| V_SEAL[VERTICAL SEAL: Back-Seal Bar Clamped]
 
-    V_SEAL -->|"Tube Locked"| DOSING["AUGER DOSING: 4.5 Servo Revolutions Active"]
-    DOSING -->|"Servo Position Complete"| DWELL["DWELL & SETTLE: Powder Settles in Tube"]
+    V_SEAL -->|Tube Formed and Locked| DOSING[AUGER DOSING: 4.5 Servo Revolutions]
+    DOSING -->|Servo Position Complete| DWELL[DWELL AND SETTLE: Powder Settles in Bag]
 
-    DWELL -->|"Dwell Timer Expired"| H_SEAL["HORIZONTAL SEAL: Cross-Seal Pneumatic Clamp"]
-    H_SEAL -->|"Thermal Seal Timer Expired"| CUT["CUT & DISCHARGE: Pneumatic Knife Actuation"]
+    DWELL -->|Dwell Timer Expired| H_SEAL[HORIZONTAL SEAL: Cross-Seal Pneumatic Clamp]
+    H_SEAL -->|Thermal Seal Timer Expired| CUT[CUT AND DISCHARGE: Pneumatic Knife Actuation]
 
-    CUT -->|"Bag Released to Chute"| CYCLE_CHECK{"Continuous Run?"}
-    CYCLE_CHECK -->|"Yes / Automatic Mode"| FILM_ADV
-    CYCLE_CHECK -->|"Stop Command"| IDLE
+    CUT -->|Bag Discharged to Chute| CYCLE_CHECK{Continuous Automatic Run?}
+    CYCLE_CHECK -->|Yes / Automatic Cycle| FILM_ADV
+    CYCLE_CHECK -->|No / Stop Command| IDLE
 
-    FILM_ADV -.->|"Safety Guard Interruption"| ESTOP(["E-STOP: Fail-Safe Zero-Energy State"])
-    DOSING -.->|"Servo Torque Overload"| ESTOP
-    H_SEAL -.->|"Jaw Thermal Runaway"| ESTOP
-    ESTOP ==>|"Manual Reset & Acknowledge"| IDLE
-
-    classDef stateNode fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
-    classDef stopNode fill:#7f1d1d,stroke:#ef4444,stroke-width:2px,color:#fee2e2;
-    classDef decision fill:#0f172a,stroke:#fbbf24,stroke-width:2px,color:#fef08a;
-
-    class START,IDLE,FILM_ADV,V_SEAL,DOSING,DWELL,H_SEAL,CUT stateNode;
-    class ESTOP stopNode;
-    class CYCLE_CHECK decision;
+    %% Safety Interlocks
+    FILM_ADV -.->|Safety Guard Interruption| ESTOP([E-STOP: Fail-Safe Zero-Energy State])
+    DOSING -.->|Servo Torque Overload| ESTOP
+    H_SEAL -.->|Jaw Thermal Runaway| ESTOP
+    ESTOP ==>|Manual Reset and Acknowledge| IDLE
 ```
 
 
